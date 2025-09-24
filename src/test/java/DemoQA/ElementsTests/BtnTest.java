@@ -1,5 +1,6 @@
 package DemoQA.ElementsTests;
 
+import DemoQA.Pages.ButtonsPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +18,7 @@ import java.time.Duration;
 public class BtnTest {
     WebDriver driver;
     WebDriverWait wait;
+    ButtonsPage buttonsPage;
 
     @BeforeTest
     public void setUp() {
@@ -24,57 +26,49 @@ public class BtnTest {
         driver = new ChromeDriver(); // Example for Chrome
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.get("https://demoqa.com/buttons");
+        buttonsPage = new ButtonsPage();
     }
 
     @Test
     public void testDoubleClick() {
-        By doubleClickBtnLocator = By.id("doubleClickBtn");
-        By doubleClickMessageLocator = By.id("doubleClickMessage");
-
-        WebElement doubleClickBtn = driver.findElement(doubleClickBtnLocator);
+        WebElement doubleClickBtn = driver.findElement(buttonsPage.doubleClickBtnLocator);
 
         Actions action = new Actions(driver);
 
-        Assert.assertTrue(elementIsDisappear(doubleClickMessageLocator));
+        Assert.assertTrue(elementIsDisappear(buttonsPage.doubleClickMessageLocator));
 
         action.doubleClick(doubleClickBtn).perform();
-        Assert.assertTrue(elementExists(doubleClickMessageLocator));
-        WebElement message = driver.findElement(doubleClickMessageLocator);
+        Assert.assertTrue(elementExists(buttonsPage.doubleClickMessageLocator));
+        WebElement message = driver.findElement(buttonsPage.doubleClickMessageLocator);
 
         assert message.getText().equals("You have done a double click");
     }
 
     @Test
     public void testRightClick() {
-        By rightClickBtnLocator = By.id("rightClickBtn");
-        By rightClickMessageLocator = By.id("rightClickMessage");
-
-        WebElement rightClickBtn = driver.findElement(rightClickBtnLocator);
+        WebElement rightClickBtn = driver.findElement(buttonsPage.rightClickBtnLocator);
 
         Actions action = new Actions(driver);
 
-        Assert.assertTrue(elementIsDisappear(rightClickMessageLocator));
+        Assert.assertTrue(elementIsDisappear(buttonsPage.rightClickMessageLocator));
 
         action.contextClick(rightClickBtn).perform();
-        Assert.assertTrue(elementExists(rightClickMessageLocator));
-        WebElement message = driver.findElement(rightClickMessageLocator);
+        Assert.assertTrue(elementExists(buttonsPage.rightClickMessageLocator));
+        WebElement message = driver.findElement(buttonsPage.rightClickMessageLocator);
 
         assert message.getText().equals("You have done a right click");
     }
 
     @Test
     public void testClickMe() {
-        By clickMeBtnLocator = By.xpath("//button[text()='Click Me']");
-        By dynamicClickMessage = By.id("dynamicClickMessage");
-
-        WebElement clickMeBtn = driver.findElement(clickMeBtnLocator);
+        WebElement clickMeBtn = driver.findElement(buttonsPage.clickMeBtnLocator);
         Actions action = new Actions(driver);
 
-        Assert.assertTrue(elementIsDisappear(dynamicClickMessage));
+        Assert.assertTrue(elementIsDisappear(buttonsPage.dynamicClickMessage));
 
         action.click(clickMeBtn).perform();
-        Assert.assertTrue(elementExists(dynamicClickMessage));
-        WebElement message = driver.findElement(dynamicClickMessage);
+        Assert.assertTrue(elementExists(buttonsPage.dynamicClickMessage));
+        WebElement message = driver.findElement(buttonsPage.dynamicClickMessage);
 
         assert message.getText().equals("You have done a dynamic click");
     }
