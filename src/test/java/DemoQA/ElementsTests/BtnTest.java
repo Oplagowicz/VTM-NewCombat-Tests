@@ -28,44 +28,53 @@ public class BtnTest {
 
     @Test
     public void testDoubleClick() {
-        WebElement doubleClickBtn = driver.findElement(By.id("doubleClickBtn"));
+        By doubleClickBtnLocator = By.id("doubleClickBtn");
+        By doubleClickMessageLocator = By.id("doubleClickMessage");
+
+        WebElement doubleClickBtn = driver.findElement(doubleClickBtnLocator);
 
         Actions action = new Actions(driver);
 
-        Assert.assertTrue(elementIsDisappear(By.id("doubleClickMessage")));
+        Assert.assertTrue(elementIsDisappear(doubleClickMessageLocator));
 
         action.doubleClick(doubleClickBtn).perform();
-        Assert.assertTrue(elementExists(By.id("doubleClickMessage")));
-        WebElement message = driver.findElement(By.id("doubleClickMessage"));
+        Assert.assertTrue(elementExists(doubleClickMessageLocator));
+        WebElement message = driver.findElement(doubleClickMessageLocator);
 
         assert message.getText().equals("You have done a double click");
     }
 
     @Test
     public void testRightClick() {
-        WebElement rightClickBtn = driver.findElement(By.id("rightClickBtn"));
+        By rightClickBtnLocator = By.id("rightClickBtn");
+        By rightClickMessageLocator = By.id("rightClickMessage");
+
+        WebElement rightClickBtn = driver.findElement(rightClickBtnLocator);
 
         Actions action = new Actions(driver);
 
-        Assert.assertTrue(elementIsDisappear(By.id("rightClickMessage")));
+        Assert.assertTrue(elementIsDisappear(rightClickMessageLocator));
 
         action.contextClick(rightClickBtn).perform();
-        Assert.assertTrue(elementExists(By.id("rightClickMessage")));
-        WebElement message = driver.findElement(By.id("rightClickMessage"));
+        Assert.assertTrue(elementExists(rightClickMessageLocator));
+        WebElement message = driver.findElement(rightClickMessageLocator);
 
         assert message.getText().equals("You have done a right click");
     }
 
     @Test
     public void testClickMe() {
-        WebElement clickMeBtn = driver.findElement(By.xpath("//button[text()='Click Me']"));
+        By clickMeBtnLocator = By.xpath("//button[text()='Click Me']");
+        By dynamicClickMessage = By.id("dynamicClickMessage");
+
+        WebElement clickMeBtn = driver.findElement(clickMeBtnLocator);
         Actions action = new Actions(driver);
 
-        Assert.assertTrue(elementIsDisappear(By.id("dynamicClickMessage")));
+        Assert.assertTrue(elementIsDisappear(dynamicClickMessage));
 
         action.click(clickMeBtn).perform();
-        Assert.assertTrue(elementExists(By.id("dynamicClickMessage")));
-        WebElement message = driver.findElement(By.id("dynamicClickMessage"));
+        Assert.assertTrue(elementExists(dynamicClickMessage));
+        WebElement message = driver.findElement(dynamicClickMessage);
 
         assert message.getText().equals("You have done a dynamic click");
     }
