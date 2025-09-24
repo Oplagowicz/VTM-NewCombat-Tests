@@ -49,7 +49,7 @@ public class TextBoxValidTest {
 
     }
 
-    @Test
+    @Test(priority = 1, dependsOnMethods = {"textBoxTest"})
     public void textBoxUserFormTest() {
         WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
         WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userEmail")));
