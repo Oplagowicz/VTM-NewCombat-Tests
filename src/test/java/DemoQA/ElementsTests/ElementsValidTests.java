@@ -115,6 +115,59 @@ public class ElementsValidTests {
         int expandedItemsCount = expandedItems.size();
         Assert.assertEquals(expandedItemsCount, 6);
 
+        // Check that there all tree-nodes are displayed and enabled
+
+        WebElement home_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-home'] span.rct-checkbox")));
+        WebElement desktop_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-desktop'] span.rct-checkbox")));
+        WebElement notes_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-notes'] span.rct-checkbox")));
+        WebElement commands_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-commands'] span.rct-checkbox")));
+        WebElement documents_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-documents'] span.rct-checkbox")));
+        WebElement workspace_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-workspace'] span.rct-checkbox")));
+        WebElement react_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-react'] span.rct-checkbox")));
+        WebElement angular_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-angular'] span.rct-checkbox")));
+        WebElement veu_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-veu'] span.rct-checkbox")));
+        WebElement office_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-office'] span.rct-checkbox")));
+        WebElement public_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-public'] span.rct-checkbox")));
+        WebElement private_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-private'] span.rct-checkbox")));
+        WebElement classified_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-classified'] span.rct-checkbox")));
+        WebElement general_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-general'] span.rct-checkbox")));
+        WebElement downloads_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-downloads'] span.rct-checkbox")));
+        WebElement wordFile_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-wordFile'] span.rct-checkbox")));
+        WebElement excelFile_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("label[for='tree-node-excelFile'] span.rct-checkbox")));
+        Assert.assertTrue(home_Checkbox.isDisplayed());
+        Assert.assertTrue(home_Checkbox.isEnabled());
+        Assert.assertTrue(desktop_Checkbox.isDisplayed());
+        Assert.assertTrue(desktop_Checkbox.isEnabled());
+        Assert.assertTrue(notes_Checkbox.isDisplayed());
+        Assert.assertTrue(notes_Checkbox.isEnabled());
+        Assert.assertTrue(commands_Checkbox.isDisplayed());
+        Assert.assertTrue(commands_Checkbox.isEnabled());
+        Assert.assertTrue(documents_Checkbox.isDisplayed());
+        Assert.assertTrue(documents_Checkbox.isEnabled());
+        Assert.assertTrue(workspace_Checkbox.isDisplayed());
+        Assert.assertTrue(workspace_Checkbox.isEnabled());
+        Assert.assertTrue(react_Checkbox.isDisplayed());
+        Assert.assertTrue(react_Checkbox.isEnabled());
+        Assert.assertTrue(angular_Checkbox.isDisplayed());
+        Assert.assertTrue(angular_Checkbox.isEnabled());
+        Assert.assertTrue(veu_Checkbox.isDisplayed());
+        Assert.assertTrue(veu_Checkbox.isEnabled());
+        Assert.assertTrue(office_Checkbox.isDisplayed());
+        Assert.assertTrue(office_Checkbox.isEnabled());
+        Assert.assertTrue(public_Checkbox.isDisplayed());
+        Assert.assertTrue(public_Checkbox.isEnabled());
+        Assert.assertTrue(private_Checkbox.isDisplayed());
+        Assert.assertTrue(private_Checkbox.isEnabled());
+        Assert.assertTrue(classified_Checkbox.isDisplayed());
+        Assert.assertTrue(classified_Checkbox.isEnabled());
+        Assert.assertTrue(general_Checkbox.isDisplayed());
+        Assert.assertTrue(general_Checkbox.isEnabled());
+        Assert.assertTrue(downloads_Checkbox.isDisplayed());
+        Assert.assertTrue(downloads_Checkbox.isEnabled());
+        Assert.assertTrue(wordFile_Checkbox.isDisplayed());
+        Assert.assertTrue(wordFile_Checkbox.isEnabled());
+        Assert.assertTrue(excelFile_Checkbox.isDisplayed());
+        Assert.assertTrue(excelFile_Checkbox.isEnabled());
         // Click Collapse All
         collapseAllBtn.click();
         // After click - all collapsed and return to default state
