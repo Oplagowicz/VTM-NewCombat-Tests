@@ -2,6 +2,7 @@ package DemoQA.ElementsTests;
 
 import DemoQA.Helpers.ListInspector;
 import DemoQA.Pages.CheckboxPage;
+import DemoQA.Pages.TextboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +22,8 @@ public class ElementsValidTests {
 
     WebDriverWait wait;
     String mainURL = "https://demoqa.com";
-    CheckboxPage checkboxPage;
+    TextboxPage textboxPage = new TextboxPage();
+    CheckboxPage checkboxPage = new CheckboxPage();
     ListInspector listInspector = new ListInspector();
     private WebDriver driver;
 
@@ -56,11 +58,11 @@ public class ElementsValidTests {
 
     @Test(dependsOnMethods = {"textBoxTest"})
     public void textBoxUserFormTest() {
-        WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
-        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userEmail")));
-        WebElement currentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("currentAddress")));
-        WebElement permanentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("permanentAddress")));
-        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("submit")));
+        WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.nameInputLocator));
+        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.emailInputLocator));
+        WebElement currentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.currentAddressLocator));
+        WebElement permanentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.permanentAddressLocator));
+        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(textboxPage.submitBtnLocator));
 
         Assert.assertTrue(nameInput.isEnabled());
         Assert.assertTrue(emailInput.isEnabled());
@@ -68,24 +70,20 @@ public class ElementsValidTests {
         Assert.assertTrue(permanentAddressInput.isEnabled());
         Assert.assertTrue(submitButton.isEnabled());
 
-        // Input data
-        String nameTest = "Arthur Demichev";
-        String emailTest = "arthur.demichev@yahoo.net";
-        String addressTest = "Cracow, Poland";
 
-        nameInput.sendKeys(nameTest);
-        emailInput.sendKeys(emailTest);
-        currentAddressInput.sendKeys(addressTest);
-        permanentAddressInput.sendKeys(addressTest);
+        nameInput.sendKeys(textboxPage.nameTest);
+        emailInput.sendKeys(textboxPage.emailTest);
+        currentAddressInput.sendKeys(textboxPage.addressTest);
+        permanentAddressInput.sendKeys(textboxPage.addressTest);
         submitButton.click();
 
-        WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("output")));
+        WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.outputLocator));
         String outputText = outputElement.getText();
 
-        Assert.assertTrue(outputText.contains(nameTest));
-        Assert.assertTrue(outputText.contains(emailTest));
-        Assert.assertTrue(outputText.contains(addressTest));
-        Assert.assertTrue(outputText.contains(addressTest));
+        Assert.assertTrue(outputText.contains(textboxPage.nameTest));
+        Assert.assertTrue(outputText.contains(textboxPage.emailTest));
+        Assert.assertTrue(outputText.contains(textboxPage.addressTest));
+        Assert.assertTrue(outputText.contains(textboxPage.addressTest));
     }
 
     @Test(priority = 1)
@@ -97,7 +95,6 @@ public class ElementsValidTests {
         String checkBoxURL = driver.getCurrentUrl();
         Assert.assertNotNull(checkBoxURL);
         Assert.assertTrue(checkBoxURL.contains("/checkbox"));
-        checkboxPage = new CheckboxPage();
         listInspector.setDriver(driver);
     }
 
