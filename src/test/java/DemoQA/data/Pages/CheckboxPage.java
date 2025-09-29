@@ -1,4 +1,4 @@
-package DemoQA.Pages;
+package DemoQA.data.Pages;
 
 import org.openqa.selenium.By;
 

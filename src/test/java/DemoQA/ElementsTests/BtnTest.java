@@ -1,7 +1,7 @@
 package DemoQA.ElementsTests;
 
 import DemoQA.Helpers.ElementDisplayInspector;
-import DemoQA.Pages.ButtonsPage;
+import DemoQA.data.Pages.ButtonsPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;

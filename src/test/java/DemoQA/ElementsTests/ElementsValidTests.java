@@ -1,8 +1,8 @@
 package DemoQA.ElementsTests;
 
 import DemoQA.Helpers.ListInspector;
-import DemoQA.Pages.CheckboxPage;
-import DemoQA.Pages.TextboxPage;
+import DemoQA.data.Pages.CheckboxPage;
+import DemoQA.data.Pages.TextboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +16,8 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
+
+import static DemoQA.data.RegistrationData.*;
 
 
 public class ElementsValidTests {
@@ -71,19 +73,19 @@ public class ElementsValidTests {
         Assert.assertTrue(submitButton.isEnabled());
 
 
-        nameInput.sendKeys(textboxPage.nameTest);
-        emailInput.sendKeys(textboxPage.emailTest);
-        currentAddressInput.sendKeys(textboxPage.addressTest);
-        permanentAddressInput.sendKeys(textboxPage.addressTest);
+        nameInput.sendKeys(nameTest);
+        emailInput.sendKeys(emailTest);
+        currentAddressInput.sendKeys(addressTest);
+        permanentAddressInput.sendKeys(addressTest);
         submitButton.click();
 
         WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.outputLocator));
         String outputText = outputElement.getText();
 
-        Assert.assertTrue(outputText.contains(textboxPage.nameTest));
-        Assert.assertTrue(outputText.contains(textboxPage.emailTest));
-        Assert.assertTrue(outputText.contains(textboxPage.addressTest));
-        Assert.assertTrue(outputText.contains(textboxPage.addressTest));
+        Assert.assertTrue(outputText.contains(nameTest));
+        Assert.assertTrue(outputText.contains(emailTest));
+        Assert.assertTrue(outputText.contains(addressTest));
+        Assert.assertTrue(outputText.contains(addressTest));
     }
 
     @Test(priority = 1)
