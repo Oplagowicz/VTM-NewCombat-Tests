@@ -2,6 +2,7 @@ package DemoQA.data.Pages;
 
 import org.openqa.selenium.By;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CheckboxPage {
@@ -14,25 +15,28 @@ public class CheckboxPage {
 
     public By resultItemsLocator = By.cssSelector("#result .text-success");
 
-    public List<By> checkBoxListLocators = List.of(
-            By.cssSelector("label[for='tree-node-home'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-desktop'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-notes'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-commands'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-documents'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-workspace'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-react'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-angular'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-veu'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-office'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-public'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-private'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-classified'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-general'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-downloads'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-wordFile'] span.rct-checkbox"),
-            By.cssSelector("label[for='tree-node-excelFile'] span.rct-checkbox")
-    );
+    public List<By> allCheckboxLocators = Collections.singletonList(By.cssSelector("label[for^='tree-node-'] span.rct-checkbox"));
+
+//    public List<By> checkBoxListLocators = List.of(
+//            By.cssSelector("label[for='tree-node-home'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-desktop'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-notes'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-commands'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-documents'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-workspace'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-react'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-angular'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-veu'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-office'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-public'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-private'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-classified'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-general'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-downloads'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-wordFile'] span.rct-checkbox"),
+//            By.cssSelector("label[for='tree-node-excelFile'] span.rct-checkbox")
+//    );
+
 
     public List<String> expectedResults = List.of(
             "home",

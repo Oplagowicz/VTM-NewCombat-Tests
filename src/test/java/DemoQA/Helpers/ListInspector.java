@@ -27,6 +27,7 @@ public class ListInspector {
                 .map(by -> Map.entry(by, driver.findElement(by)))
                 .filter(entry -> !entry.getValue().isEnabled())
                 .map(entry -> entry.getKey().toString()) // Convert By to String for better readability
+                .peek(entry -> System.out.println("Disabled checkbox found: " + entry))
                 .toList();
 
         // One clear assertion

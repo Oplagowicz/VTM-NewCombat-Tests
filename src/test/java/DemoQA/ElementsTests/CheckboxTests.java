@@ -2,7 +2,6 @@ package DemoQA.ElementsTests;
 
 import DemoQA.Helpers.ListInspector;
 import DemoQA.data.Pages.CheckboxPage;
-import DemoQA.data.Pages.TextboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,21 +9,19 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
 
-import static DemoQA.data.RegistrationData.*;
+import static DemoQA.data.MainData.mainURL;
 
 
-public class ElementsValidTests {
+public class CheckboxTests {
 
     WebDriverWait wait;
-    String mainURL = "https://demoqa.com";
-    TextboxPage textboxPage = new TextboxPage();
     CheckboxPage checkboxPage = new CheckboxPage();
     ListInspector listInspector = new ListInspector();
     private WebDriver driver;
@@ -41,54 +38,7 @@ public class ElementsValidTests {
         elements.click();
     }
 
-    @Test(priority = -1)
-    public void textBoxTest() {
-        wait.until(ExpectedConditions.urlContains("/elements"));
-
-        String currentURL = driver.getCurrentUrl();
-        Assert.assertNotNull(currentURL);
-        Assert.assertTrue(currentURL.contains("/elements"));
-
-        WebElement textBoxElement = driver.findElement(By.id("item-0"));
-        textBoxElement.click();
-
-        wait.until(ExpectedConditions.urlContains("/text-box"));
-        String textBoxURL = driver.getCurrentUrl();
-        Assert.assertTrue(textBoxURL.contains("/text-box"));
-
-    }
-
-    @Test(dependsOnMethods = {"textBoxTest"})
-    public void textBoxUserFormTest() {
-        WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.nameInputLocator));
-        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.emailInputLocator));
-        WebElement currentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.currentAddressLocator));
-        WebElement permanentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.permanentAddressLocator));
-        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(textboxPage.submitBtnLocator));
-
-        Assert.assertTrue(nameInput.isEnabled());
-        Assert.assertTrue(emailInput.isEnabled());
-        Assert.assertTrue(currentAddressInput.isEnabled());
-        Assert.assertTrue(permanentAddressInput.isEnabled());
-        Assert.assertTrue(submitButton.isEnabled());
-
-
-        nameInput.sendKeys(nameTest);
-        emailInput.sendKeys(emailTest);
-        currentAddressInput.sendKeys(addressTest);
-        permanentAddressInput.sendKeys(addressTest);
-        submitButton.click();
-
-        WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.outputLocator));
-        String outputText = outputElement.getText();
-
-        Assert.assertTrue(outputText.contains(nameTest));
-        Assert.assertTrue(outputText.contains(emailTest));
-        Assert.assertTrue(outputText.contains(addressTest));
-        Assert.assertTrue(outputText.contains(addressTest));
-    }
-
-    @Test(priority = 1)
+    @Test
     public void checkBoxTest() {
         WebElement checkBoxElement = driver.findElement(By.id("item-1"));
         checkBoxElement.click();
@@ -100,7 +50,7 @@ public class ElementsValidTests {
         listInspector.setDriver(driver);
     }
 
-    @Test(priority = 2, dependsOnMethods = {"checkBoxTest"})
+    @Test(priority = 1, dependsOnMethods = {"checkBoxTest"})
     public void checkBox_Expand_Collapse_AllBtnTest() {
         WebElement expandAllBtn = driver.findElement(checkboxPage.expandAllBtnLocator);
         WebElement collapseAllBtn = driver.findElement(checkboxPage.collapseAllBtnLocator);
@@ -125,7 +75,7 @@ public class ElementsValidTests {
 
         // Check that there all tree-nodes are displayed and enabled
 
-        listInspector.assertAllCheckboxesEnabled(checkboxPage.checkBoxListLocators);
+        listInspector.assertAllCheckboxesEnabled(checkboxPage.allCheckboxLocators);
 
 
         // Click Collapse All
@@ -136,7 +86,7 @@ public class ElementsValidTests {
         Assert.assertEquals(collapsedItemsCount, 1);
     }
 
-    @Test(priority = 2, dependsOnMethods = {"checkBoxTest"})
+    @Test(priority = 1, dependsOnMethods = {"checkBoxTest"})
     public void checkBox_Select_Home_CheckboxTest() {
         WebElement home_Checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(checkboxPage.home_Checkbox));
         Assert.assertTrue(home_Checkbox.isEnabled());
@@ -155,7 +105,7 @@ public class ElementsValidTests {
         listInspector.assertAllResultsText(checkboxPage.expectedResults, actualTexts);
     }
 
-    @AfterTest
+    @AfterMethod
     public void tearDown() {
         if (driver != null) {
             driver.quit();
