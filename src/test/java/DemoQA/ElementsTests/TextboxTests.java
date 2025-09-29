@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -69,7 +69,7 @@ public class TextboxTests {
         WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.emailInputLocator));
         WebElement currentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.currentAddressLocator));
         WebElement permanentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.permanentAddressLocator));
-        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(textboxPage.submitBtnLocator));
+        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.submitBtnLocator));
 
         nameInput.sendKeys(nameTest);
         emailInput.sendKeys(emailTest);
@@ -87,7 +87,7 @@ public class TextboxTests {
 
     }
 
-    @AfterMethod
+    @AfterTest
     public void tearDown() {
         if (driver != null) {
             driver.quit();
