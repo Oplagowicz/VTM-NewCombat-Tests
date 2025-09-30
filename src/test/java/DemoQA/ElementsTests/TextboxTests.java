@@ -26,9 +26,8 @@ public class TextboxTests {
     public void prep() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
+        textboxPage.TextBoxPage(driver, wait);
         driver.get(mainURL);
         WebElement elements = driver.findElement(By.xpath("//*[text()='Elements']"));
         elements.click();
@@ -49,33 +48,20 @@ public class TextboxTests {
         String textBoxURL = driver.getCurrentUrl();
         Assert.assertTrue(textBoxURL.contains("/text-box"));
 
-        WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.nameInputLocator));
-        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.emailInputLocator));
-        WebElement currentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.currentAddressLocator));
-        WebElement permanentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.permanentAddressLocator));
-        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(textboxPage.submitBtnLocator));
-
-        Assert.assertTrue(nameInput.isEnabled());
-        Assert.assertTrue(emailInput.isEnabled());
-        Assert.assertTrue(currentAddressInput.isEnabled());
-        Assert.assertTrue(permanentAddressInput.isEnabled());
-        Assert.assertTrue(submitButton.isEnabled());
-
+        Assert.assertTrue(textboxPage.nameInput().isEnabled());
+        Assert.assertTrue(textboxPage.emailInput().isEnabled());
+        Assert.assertTrue(textboxPage.currentAddressInput().isEnabled());
+        Assert.assertTrue(textboxPage.permanentAddressInput().isEnabled());
+        Assert.assertTrue(textboxPage.submitButton().isEnabled());
     }
 
     @Test(priority = 1, dependsOnMethods = {"textBoxTest"})
     public void textBoxUserFormTest() {
-        WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.nameInputLocator));
-        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.emailInputLocator));
-        WebElement currentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.currentAddressLocator));
-        WebElement permanentAddressInput = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.permanentAddressLocator));
-        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.submitBtnLocator));
-
-        nameInput.sendKeys(nameTest);
-        emailInput.sendKeys(emailTest);
-        currentAddressInput.sendKeys(addressTest);
-        permanentAddressInput.sendKeys(addressTest);
-        submitButton.click();
+        textboxPage.nameInput().sendKeys(nameTest);          // re-find each call
+        textboxPage.emailInput().sendKeys(emailTest);
+        textboxPage.currentAddressInput().sendKeys(addressTest);
+        textboxPage.permanentAddressInput().sendKeys(addressTest);
+        textboxPage.submitButton().click(); // <-- bug with google ad covering the button
 
         WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.outputLocator));
         String outputText = outputElement.getText();
@@ -85,6 +71,34 @@ public class TextboxTests {
         Assert.assertTrue(outputText.contains(addressTest));
         Assert.assertTrue(outputText.contains(addressTest));
 
+    }
+
+    @Test(priority = 2, dependsOnMethods = {"textBoxUserFormTest"})
+    public void textBoxNoInputAfterSubmitTest() {
+        textboxPage.nameInput().clear();          // re-find each call
+        textboxPage.emailInput().clear();
+        textboxPage.currentAddressInput().clear();
+        textboxPage.permanentAddressInput().clear();
+        textboxPage.submitButton().click();
+
+        WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.outputLocator));
+        String outputText = outputElement.getText();
+
+        Assert.assertFalse(outputText.contains(nameTest));
+        Assert.assertFalse(outputText.contains(emailTest));
+        Assert.assertFalse(outputText.contains(addressTest));
+        Assert.assertFalse(outputText.contains(addressTest));
+    }
+
+    @Test(priority = 3, dependsOnMethods = {"textBoxUserFormTest"})
+    public void textBoxInvalidEmailTest() {
+        textboxPage.emailInput().clear();
+        textboxPage.emailInput().sendKeys("invalid-email");
+        textboxPage.submitButton().click();
+
+        String emailClass = textboxPage.emailInput().getAttribute("class");
+        Assert.assertNotNull(emailClass);
+        Assert.assertTrue(emailClass.contains("field-error"), "Email field does not indicate error for invalid input.");
     }
 
     @AfterTest
