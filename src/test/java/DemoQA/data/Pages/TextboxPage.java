@@ -39,10 +39,7 @@ public class TextboxPage {
     }
 
     public WebElement submitButton() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(submitBtnLocator));
+        return wait.until(ExpectedConditions.elementToBeClickable(submitBtnLocator));
     }
 
-//    public WebElement output() {
-//        return wait.until(ExpectedConditions.visibilityOfElementLocated(outputLocator));
-//    }
 }
