@@ -4,10 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ElementDisplayInspector {
+public class ElementHelper {
     private WebDriver driver;
 
-    public void setDriver(WebDriver driver) {
+    public ElementHelper(WebDriver driver) {
         this.driver = driver;
     }
 
