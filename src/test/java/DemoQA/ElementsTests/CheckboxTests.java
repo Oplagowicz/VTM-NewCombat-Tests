@@ -1,6 +1,7 @@
 package DemoQA.ElementsTests;
 
 import DemoQA.Helpers.ListInspector;
+import DemoQA.Helpers.ScreenshotOnFailureListener;
 import DemoQA.data.Pages.CheckboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -18,7 +20,7 @@ import java.util.List;
 
 import static DemoQA.data.MainData.mainURL;
 
-
+@Listeners(ScreenshotOnFailureListener.class)
 public class CheckboxTests {
 
     WebDriverWait wait;
