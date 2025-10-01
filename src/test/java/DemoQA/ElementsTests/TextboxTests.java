@@ -1,5 +1,6 @@
 package DemoQA.ElementsTests;
 
+import DemoQA.Helpers.ScreenshotOnFailureListener;
 import DemoQA.data.Pages.TextboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -17,6 +19,7 @@ import java.time.Duration;
 import static DemoQA.data.MainData.mainURL;
 import static DemoQA.data.RegistrationData.*;
 
+@Listeners(ScreenshotOnFailureListener.class)
 public class TextboxTests {
     WebDriverWait wait;
     TextboxPage textboxPage = new TextboxPage();
