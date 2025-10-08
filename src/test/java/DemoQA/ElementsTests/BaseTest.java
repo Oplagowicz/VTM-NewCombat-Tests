@@ -4,25 +4,27 @@ import DemoQA.Helpers.ElementHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
 
 public class BaseTest {
+    private final String APP_URL = "https://demoqa.com/";
     public WebDriverWait wait;
-    public WebDriver driver;
     public ElementHelper inspector;
+    protected WebDriver driver;
 
     public WebDriver getDriver() {
-        if (driver == null) {
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
+        if (this.driver == null) {
+            this.driver = new ChromeDriver();
+            this.driver.manage().window().maximize();
         }
-        return driver;
+        return this.driver;
     }
 
-    @BeforeSuite
+    @BeforeClass(alwaysRun = true)
     public void prepSuit() {
         System.out.println("Setting up the test");
         WebDriver initDriver = getDriver();
@@ -30,12 +32,24 @@ public class BaseTest {
         inspector = new ElementHelper(initDriver);
     }
 
-    @AfterSuite
-    public void tearDown() {
-        System.out.println("Tearing down the test");
+    @BeforeMethod(alwaysRun = true)
+    public void openMainPage() {
+        this.open();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void quitDriver() {
         if (getDriver() != null) {
             System.out.println("Closing the browser");
             getDriver().quit();
         }
+    }
+
+    public void open(String pageURL) {
+        getDriver().navigate().to(APP_URL + pageURL);
+    }
+
+    public void open() {
+        getDriver().navigate().to(APP_URL);
     }
 }

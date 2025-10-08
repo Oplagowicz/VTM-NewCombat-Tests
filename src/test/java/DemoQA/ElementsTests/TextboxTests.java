@@ -5,25 +5,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static DemoQA.data.MainData.mainURL;
 import static DemoQA.data.RegistrationData.*;
 
 public class TextboxTests extends BaseTest {
 
     TextboxPage textboxPage = new TextboxPage();
 
-    @BeforeClass
+    @BeforeMethod
     public void prep() {
-        System.out.println("!!!!!!");
-        getDriver().get(mainURL);
         WebElement elements = getDriver().findElement(By.xpath("//*[text()='Elements']"));
+
         elements.click();
-        textboxPage.TextBoxPage(getDriver(), wait);
+        textboxPage.TextBoxPageDrive(getDriver(), wait);
     }
 
+    private void openTextBoxPage() {
+        WebElement textBoxElement = getDriver().findElement(By.id("item-0"));
+        textBoxElement.click();
+    }
 
 //    @BeforeTest
 //    public void prep() {
@@ -44,8 +46,7 @@ public class TextboxTests extends BaseTest {
         Assert.assertNotNull(currentURL);
         Assert.assertTrue(currentURL.contains("/elements"));
 
-        WebElement textBoxElement = getDriver().findElement(By.id("item-0"));
-        textBoxElement.click();
+        openTextBoxPage();
 
         wait.until(ExpectedConditions.urlContains("/text-box"));
         String textBoxURL = getDriver().getCurrentUrl();
@@ -60,6 +61,7 @@ public class TextboxTests extends BaseTest {
 
     @Test(priority = 1, dependsOnMethods = {"textBoxTest"})
     public void textBoxUserFormTest() {
+        openTextBoxPage();
         textboxPage.nameInput().sendKeys(nameTest);          // re-find each call
         textboxPage.emailInput().sendKeys(emailTest);
         textboxPage.currentAddressInput().sendKeys(addressTest);
@@ -78,8 +80,7 @@ public class TextboxTests extends BaseTest {
 
     @Test(priority = 2, dependsOnMethods = {"textBoxUserFormTest"})
     public void textBoxNoInputAfterSubmitTest() {
-        textboxPage.TextBoxPage(getDriver(), wait);
-
+        openTextBoxPage();
         textboxPage.nameInput().clear();          // re-find each call
         textboxPage.emailInput().clear();
         textboxPage.currentAddressInput().clear();
@@ -97,6 +98,7 @@ public class TextboxTests extends BaseTest {
 
     @Test(priority = 3, dependsOnMethods = {"textBoxUserFormTest"})
     public void textBoxInvalidEmailTest() {
+        openTextBoxPage();
         textboxPage.emailInput().clear();
         textboxPage.emailInput().sendKeys("invalid-email");
         textboxPage.submitButton().click();

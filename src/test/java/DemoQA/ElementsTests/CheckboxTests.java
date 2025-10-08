@@ -6,12 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
-
-import static DemoQA.data.MainData.mainURL;
 
 
 public class CheckboxTests extends BaseTest {
@@ -19,25 +17,12 @@ public class CheckboxTests extends BaseTest {
     CheckboxPage checkboxPage = new CheckboxPage();
     ListInspector listInspector = new ListInspector();
 
-    @BeforeClass
+    @BeforeMethod
     public void prep() {
-        getDriver().get(mainURL);
+        open("checkbox");
         listInspector.setDriver(getDriver());
-        WebElement elements = getDriver().findElement(By.xpath("//*[text()='Elements']"));
-        elements.click();
     }
 
-//    @BeforeTest
-//    public void prep() {
-//        driver = new ChromeDriver();
-//        driver.manage().window().maximize();
-//
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//
-//        driver.get(mainURL);
-//        WebElement elements = driver.findElement(By.xpath("//*[text()='Elements']"));
-//        elements.click();
-//    }
 
     @Test
     public void checkBoxTest() {

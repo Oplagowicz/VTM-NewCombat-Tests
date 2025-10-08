@@ -4,27 +4,17 @@ import DemoQA.data.Pages.ButtonsPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class BtnTest extends BaseTest {
-    ButtonsPage buttonsPage;
+    ButtonsPage buttonsPage = new ButtonsPage();
 
-    @BeforeClass
+    @BeforeMethod
     public void prep() {
-        System.out.println("%%%%%");
-        getDriver().get("https://demoqa.com/buttons");
-        buttonsPage = new ButtonsPage();
+        open("buttons");
     }
 
-//    @BeforeTest
-//    public void setUp() {
-//        driver = new ChromeDriver();
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        driver.get("https://demoqa.com/buttons");
-//        inspector.setDriver(driver);
-//        buttonsPage = new ButtonsPage();
-//    }
 
     @Test
     public void testDoubleClick() {
