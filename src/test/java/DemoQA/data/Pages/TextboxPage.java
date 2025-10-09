@@ -16,7 +16,8 @@ public class TextboxPage {
     WebDriver driver;
     private WebDriverWait wait;
 
-    public void TextBoxPage(WebDriver driver, WebDriverWait wait) {
+
+    public void TextBoxPageDrive(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
     }
