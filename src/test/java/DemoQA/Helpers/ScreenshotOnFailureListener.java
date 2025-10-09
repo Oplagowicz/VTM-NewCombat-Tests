@@ -18,12 +18,17 @@ public class ScreenshotOnFailureListener implements ITestListener {
 
     private void capture(ITestResult result) {
         WebDriver driver = resolveDriver(result.getInstance());
-        if (driver == null) return;
 
-        var path = Screenshots.saveFull(driver, result.getMethod().getMethodName());
-        if (path != null) {
-            System.out.println("[Screenshot saved] " + path.toAbsolutePath());
-            result.setAttribute("screenshotPath", path.toAbsolutePath().toString()); // useful in reports
+        if (driver == null) {
+            // fallback - read driver from TestNG context set in BaseTest
+            Object v = result.getTestContext().getAttribute("driver");
+            if (v instanceof WebDriver) driver = (WebDriver) v;
+        }
+
+        if (driver != null) {
+            Screenshots.save(driver, result.getName());
+        } else {
+            System.out.println("[WARN] No WebDriver found for screenshot.");
         }
     }
 

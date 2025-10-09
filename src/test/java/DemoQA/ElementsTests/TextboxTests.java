@@ -6,8 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static DemoQA.data.RegistrationData.*;
@@ -30,16 +30,6 @@ public class TextboxTests extends BaseTest {
         textBoxElement.click();
     }
 
-//    @BeforeTest
-//    public void prep() {
-//        driver = new ChromeDriver();
-//        driver.manage().window().maximize();
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        textboxPage.TextBoxPage(driver, wait);
-//        driver.get(mainURL);
-//        WebElement elements = driver.findElement(By.xpath("//*[text()='Elements']"));
-//        elements.click();
-//    }
 
     @Test
     public void textBoxTest() {

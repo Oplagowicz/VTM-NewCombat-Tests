@@ -4,6 +4,7 @@ import DemoQA.Helpers.ElementHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -25,11 +26,14 @@ public class BaseTest {
     }
 
     @BeforeClass(alwaysRun = true)
-    public void prepSuit() {
+    public void prepSuit(final ITestContext ctx) {
         System.out.println("Setting up the test");
         WebDriver initDriver = getDriver();
         wait = new WebDriverWait(initDriver, Duration.ofSeconds(10));
         inspector = new ElementHelper(initDriver);
+
+        ctx.setAttribute("driver", initDriver);
+        ctx.setAttribute(getClass().getName() + ".driver", initDriver);
     }
 
     @BeforeMethod(alwaysRun = true)
