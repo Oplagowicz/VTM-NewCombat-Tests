@@ -1,15 +1,18 @@
 package DemoQA.ElementsTests;
 
+import DemoQA.Helpers.ScreenshotOnFailureListener;
 import DemoQA.data.Pages.TextboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static DemoQA.data.RegistrationData.*;
 
+@Listeners(ScreenshotOnFailureListener.class)
 public class TextboxTests extends BaseTest {
 
     TextboxPage textboxPage = new TextboxPage();

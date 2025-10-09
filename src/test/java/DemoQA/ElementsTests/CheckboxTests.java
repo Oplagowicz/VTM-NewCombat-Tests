@@ -1,17 +1,20 @@
 package DemoQA.ElementsTests;
 
 import DemoQA.Helpers.ListInspector;
+import DemoQA.Helpers.ScreenshotOnFailureListener;
 import DemoQA.data.Pages.CheckboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 
+@Listeners(ScreenshotOnFailureListener.class)
 public class CheckboxTests extends BaseTest {
 
     CheckboxPage checkboxPage = new CheckboxPage();
