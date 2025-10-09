@@ -23,6 +23,7 @@ public class AlertsTests extends BaseTest {
     public void testAlertButton() {
         WebElement alertBtn = getDriver().findElement(alertsPage.alertButton);
         alertBtn.click();
+        Assert.assertEquals(getDriver().switchTo().alert().getText(), "You clicked a button");
         getDriver().switchTo().alert().accept();
     }
 
@@ -31,6 +32,7 @@ public class AlertsTests extends BaseTest {
         WebElement timerAlertBtn = getDriver().findElement(alertsPage.timerAlertButton);
         timerAlertBtn.click();
         Thread.sleep(6000);
+        Assert.assertEquals(getDriver().switchTo().alert().getText(), "This alert appeared after 5 seconds");
         getDriver().switchTo().alert().accept();
     }
 
