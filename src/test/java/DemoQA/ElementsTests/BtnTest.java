@@ -5,11 +5,12 @@ import DemoQA.data.Pages.ButtonsPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 
 @Listeners(ScreenshotOnFailureListener.class)
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+
 
 public class BtnTest extends BaseTest {
     ButtonsPage buttonsPage = new ButtonsPage();
