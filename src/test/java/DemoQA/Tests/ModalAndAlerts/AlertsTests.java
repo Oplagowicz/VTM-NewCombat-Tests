@@ -1,7 +1,8 @@
-package DemoQA.ElementsTests;
+package DemoQA.Tests.ModalAndAlerts;
 
 
 import DemoQA.Helpers.ScreenshotOnFailureListener;
+import DemoQA.Tests.BaseTest;
 import DemoQA.data.Pages.AlertsPage;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
