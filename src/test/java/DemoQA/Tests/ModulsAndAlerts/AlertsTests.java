@@ -10,6 +10,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static DemoQA.data.Pages.AlertsPage.*;
+
 @Listeners(ScreenshotOnFailureListener.class)
 public class AlertsTests extends BaseTest {
     AlertsPage alertsPage = new AlertsPage();
@@ -23,7 +25,7 @@ public class AlertsTests extends BaseTest {
     public void testAlertButton() {
         WebElement alertBtn = getDriver().findElement(alertsPage.alertButton);
         alertBtn.click();
-        Assert.assertEquals(getDriver().switchTo().alert().getText(), "You clicked a button");
+        Assert.assertEquals(getDriver().switchTo().alert().getText(), alertButtonText);
         getDriver().switchTo().alert().accept();
     }
 
@@ -32,7 +34,7 @@ public class AlertsTests extends BaseTest {
         WebElement timerAlertBtn = getDriver().findElement(alertsPage.timerAlertButton);
         timerAlertBtn.click();
         Thread.sleep(6000);
-        Assert.assertEquals(getDriver().switchTo().alert().getText(), "This alert appeared after 5 seconds");
+        Assert.assertEquals(getDriver().switchTo().alert().getText(), timerAlertButtonText);
         getDriver().switchTo().alert().accept();
     }
 
@@ -42,10 +44,10 @@ public class AlertsTests extends BaseTest {
         confirmBtn.click();
         getDriver().switchTo().alert().dismiss();
         WebElement confirmResult = getDriver().findElement(alertsPage.confirmResult);
-        Assert.assertEquals(confirmResult.getText(), "You selected Cancel");
+        Assert.assertEquals(confirmResult.getText(), confirmButtonTextCancel);
         confirmBtn.click();
         getDriver().switchTo().alert().accept();
-        Assert.assertEquals(confirmResult.getText(), "You selected Ok");
+        Assert.assertEquals(confirmResult.getText(), confirmButtonTextOk);
     }
 
     @Test
@@ -55,6 +57,6 @@ public class AlertsTests extends BaseTest {
         getDriver().switchTo().alert().sendKeys("Test");
         getDriver().switchTo().alert().accept();
         WebElement promptResult = getDriver().findElement(alertsPage.promptResult);
-        Assert.assertEquals(promptResult.getText(), "You entered Test");
+        Assert.assertEquals(promptResult.getText(), promptButtonText);
     }
 }
