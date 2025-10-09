@@ -1,6 +1,7 @@
-package DemoQA.ElementsTests;
+package DemoQA.Tests.Elements;
 
 import DemoQA.Helpers.ScreenshotOnFailureListener;
+import DemoQA.Tests.BaseTest;
 import DemoQA.data.Pages.ButtonsPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;

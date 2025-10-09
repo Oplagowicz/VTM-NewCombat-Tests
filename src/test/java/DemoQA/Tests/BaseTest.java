@@ -1,4 +1,4 @@
-package DemoQA.ElementsTests;
+package DemoQA.Tests;
 
 import DemoQA.Helpers.ElementHelper;
 import org.openqa.selenium.WebDriver;

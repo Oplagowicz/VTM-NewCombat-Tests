@@ -1,6 +1,7 @@
-package DemoQA.ElementsTests;
+package DemoQA.Tests.Elements;
 
 import DemoQA.Helpers.ScreenshotOnFailureListener;
+import DemoQA.Tests.BaseTest;
 import DemoQA.data.Pages.TextboxPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
