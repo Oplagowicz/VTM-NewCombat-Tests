@@ -1,39 +1,46 @@
 package DemoQA.Tests;
 
+import DemoQA.Factory.Driver;
 import DemoQA.Helpers.ElementHelper;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
 public class BaseTest {
     private final String APP_URL = "https://demoqa.com/";
-    public WebDriverWait wait;
-    public ElementHelper inspector;
+
+    protected WebDriverWait wait;
+    protected ElementHelper inspector;
     protected WebDriver driver;
 
     public WebDriver getDriver() {
-        if (this.driver == null) {
-            this.driver = new ChromeDriver();
-            this.driver.manage().window().maximize();
-        }
         return this.driver;
     }
 
+    private void setDriver(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    @Parameters({"browser", "mode"})
     @BeforeClass(alwaysRun = true)
-    public void prepSuit(final ITestContext ctx) {
+    public void prepSuit(@Optional("chrome") String browser,
+                         @Optional("desktop") String mode,
+                         ITestContext ctx) {
         System.out.println("Setting up the test");
-        WebDriver initDriver = getDriver();
+        WebDriver initDriver = Driver.createDriver(browser, mode);
+
+        setDriver(initDriver);
+
         wait = new WebDriverWait(initDriver, Duration.ofSeconds(10));
         inspector = new ElementHelper(initDriver);
 
         ctx.setAttribute("driver", initDriver);
         ctx.setAttribute(getClass().getName() + ".driver", initDriver);
+        ctx.setAttribute("browser", browser);
+        ctx.setAttribute("mode", mode);
     }
 
     @BeforeMethod(alwaysRun = true)
@@ -46,14 +53,21 @@ public class BaseTest {
         if (getDriver() != null) {
             System.out.println("Closing the browser");
             getDriver().quit();
+            setDriver(null);
         }
     }
 
     public void open(String pageURL) {
+        if (getDriver() == null) {
+            throw new IllegalStateException("WebDriver is not initialized. Cannot open page.");
+        }
         getDriver().navigate().to(APP_URL + pageURL);
     }
 
     public void open() {
+        if (getDriver() == null) {
+            throw new IllegalStateException("WebDriver is not initialized. Cannot open page.");
+        }
         getDriver().navigate().to(APP_URL);
     }
 }
