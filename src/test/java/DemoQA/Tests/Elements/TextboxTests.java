@@ -20,31 +20,26 @@ public class TextboxTests extends BaseTest {
 
     @BeforeMethod
     public void prep() {
-        WebElement elements = getDriver().findElement(By.xpath("//*[text()='Elements']"));
-
-        elements.click();
+        clickReliableBy(By.xpath("//*[text()='Elements']"));
         textboxPage.TextBoxPageDrive(getDriver(), wait);
-    }
-
-    private void openTextBoxPage() {
-        WebElement textBoxElement = getDriver().findElement(By.id("item-0"));
-        textBoxElement.click();
-    }
-
-
-    @Test
-    public void textBoxTest() {
         wait.until(ExpectedConditions.urlContains("/elements"));
 
         String currentURL = getDriver().getCurrentUrl();
         Assert.assertNotNull(currentURL);
         Assert.assertTrue(currentURL.contains("/elements"));
 
-        openTextBoxPage();
+        clickReliableBy(By.id("item-0"));
+    }
 
-        wait.until(ExpectedConditions.urlContains("/text-box"));
+    private void textboxPageCheck() {
         String textBoxURL = getDriver().getCurrentUrl();
+        Assert.assertNotNull(textBoxURL);
         Assert.assertTrue(textBoxURL.contains("/text-box"));
+    }
+
+    @Test
+    public void textBoxTest() {
+        textboxPageCheck();
 
         Assert.assertTrue(textboxPage.nameInput().isEnabled());
         Assert.assertTrue(textboxPage.emailInput().isEnabled());
@@ -55,12 +50,13 @@ public class TextboxTests extends BaseTest {
 
     @Test(priority = 1, dependsOnMethods = {"textBoxTest"})
     public void textBoxUserFormTest() {
-        openTextBoxPage();
+        textboxPageCheck();
+
         textboxPage.nameInput().sendKeys(nameTest);          // re-find each call
         textboxPage.emailInput().sendKeys(emailTest);
         textboxPage.currentAddressInput().sendKeys(addressTest);
         textboxPage.permanentAddressInput().sendKeys(addressTest);
-        textboxPage.submitButton().click();
+        clickReliableBy(textboxPage.submitBtnLocator);
 
         WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.outputLocator));
         String outputText = outputElement.getText();
@@ -74,12 +70,13 @@ public class TextboxTests extends BaseTest {
 
     @Test(priority = 2, dependsOnMethods = {"textBoxUserFormTest"})
     public void textBoxNoInputAfterSubmitTest() {
-        openTextBoxPage();
+        textboxPageCheck();
+
         textboxPage.nameInput().clear();          // re-find each call
         textboxPage.emailInput().clear();
         textboxPage.currentAddressInput().clear();
         textboxPage.permanentAddressInput().clear();
-        textboxPage.submitButton().click();
+        clickReliableBy(textboxPage.submitBtnLocator);
 
         WebElement outputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(textboxPage.outputLocator));
         String outputText = outputElement.getText();
@@ -92,10 +89,11 @@ public class TextboxTests extends BaseTest {
 
     @Test(priority = 3, dependsOnMethods = {"textBoxUserFormTest"})
     public void textBoxInvalidEmailTest() {
-        openTextBoxPage();
+        textboxPageCheck();
+
         textboxPage.emailInput().clear();
         textboxPage.emailInput().sendKeys("invalid-email");
-        textboxPage.submitButton().click();
+        clickReliableBy(textboxPage.submitBtnLocator);
 
         String emailClass = textboxPage.emailInput().getAttribute("class");
         Assert.assertNotNull(emailClass);

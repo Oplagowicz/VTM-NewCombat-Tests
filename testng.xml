@@ -14,6 +14,7 @@
         <parameter name="mode" value="desktop"/>
         <packages>
             <package name="DemoQA.Tests.Elements"/>
+            <package name="DemoQA.Tests.ModulsAndAlerts"/>
         </packages>
     </test>
 
@@ -23,6 +24,7 @@
         <parameter name="mode" value="mobile"/>
         <packages>
             <package name="DemoQA.Tests.Elements"/>
+            <package name="DemoQA.Tests.ModulsAndAlerts"/>
         </packages>
     </test>
 
@@ -32,6 +34,7 @@
         <parameter name="mode" value="desktop"/>
         <packages>
             <package name="DemoQA.Tests.Elements"/>
+            <package name="DemoQA.Tests.ModulsAndAlerts"/>
         </packages>
     </test>
 
@@ -41,6 +44,7 @@
         <parameter name="mode" value="mobile"/>
         <packages>
             <package name="DemoQA.Tests.Elements"/>
+            <package name="DemoQA.Tests.ModulsAndAlerts"/>
         </packages>
     </test>
 
