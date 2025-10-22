@@ -40,7 +40,7 @@ public class TextboxPage {
     }
 
     public WebElement submitButton() {
-        return wait.until(ExpectedConditions.elementToBeClickable(submitBtnLocator));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(submitBtnLocator));
     }
 
 }
