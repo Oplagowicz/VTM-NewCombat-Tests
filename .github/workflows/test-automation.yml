@@ -44,6 +44,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
+      - name: ❌ Remove conflicting chromedriver from PATH
+        run: |
+          sudo apt-get remove -y chromedriver || true
+          sudo rm -f /usr/bin/chromedriver || true
+          which chromedriver || echo "OK: no chromedriver in PATH"
+
       - name: ✅ Verify Chrome
         run: |
           google-chrome --version
@@ -54,7 +60,7 @@ jobs:
         if: matrix.browser == 'firefox'
         uses: browser-actions/setup-firefox@latest
 
-      - name: 🌐 Verify Firefox Installation
+      - name: ✅ Verify Firefox Installation
         if: matrix.browser == 'firefox'
         run: |
           firefox --version
