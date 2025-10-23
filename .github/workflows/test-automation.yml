@@ -35,17 +35,20 @@ jobs:
             ${{ runner.os }}-maven-
             
             
-      - name: 🌐 Setup Chrome
-        if: matrix.browser == 'chrome'
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
-
-      - name: 🌐 Verify Chrome Installation
-        if: matrix.browser == 'chrome'
+      - name: 🌐 Install Google Chrome via apt
         run: |
-          chrome --version || google-chrome --version
-          which chrome || which google-chrome
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg
+          wget -qO- https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-linux-signing-keyring.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux-signing-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: ✅ Verify Chrome
+        run: |
+          google-chrome --version
+          which google-chrome
+          google-chrome --headless=new --dump-dom "data:text/html,ok"
 
       - name: 🌐 Setup Firefox
         if: matrix.browser == 'firefox'
