@@ -7,6 +7,7 @@ on:
 #    branches: [ main, develop ]
   workflow_dispatch:
 env:
+  ALLURE_VERSION: '2.24.0'
   JAVA_VERSION: '25'
   
 jobs:
@@ -40,7 +41,7 @@ jobs:
         if: matrix.browser == 'chrome'
         uses: browser-actions/setup-chrome@latest
 
-      - name: 🌐 Verify Chrome Installation
+      - name: ✅ Verify Chrome Installation
         if: matrix.browser == 'chrome'
         run: |
           google-chrome --version
@@ -63,7 +64,30 @@ jobs:
         continue-on-error: true
         env:
           CI: "true"
-        run: mvn clean test -Dbrowser=${{ matrix.browser }} -Dmode=headless  -Dsurefire.reportFormat=xml
+          echo "🚀 Running tests on browser: ${{ matrix.browser }} in headless mode"
+        run:
+          mvn clean test -Dbrowser=${{ matrix.browser }} -Dmode=headless  -Dsurefire.reportFormat=xml
+
+      - name: 📊 Generate Allure Report
+        if: always()
+        run: |
+          echo "📊 Generating local Allure report..."
+          mvn allure:report || echo "Local allure report generation failed, continuing..."
+
+          echo "📈 Checking test results..."
+          if [ -d "allure-results" ]; then
+            echo "✅ Allure results found:"
+            ls -la allure-results/
+          else
+            echo "⚠️ No allure-results directory found"
+          fi
+
+          if [ -d "target/surefire-reports" ]; then
+            echo "✅ Surefire reports found:"
+            ls -la target/surefire-reports/
+          else
+            echo "⚠️ No surefire-reports directory found"
+          fi  
 
       - name: Upload Test Results
         if: always()
@@ -72,8 +96,16 @@ jobs:
           name: test-results-${{ matrix.browser }}
           path: |
             target/surefire-reports/
-            target/extent-reports/
-            target/screenshots/
+            allure-results/
+            target/site/allure-maven-plugin/
+            screenshots/
+
+      - name: 📤 Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ matrix.browser }}
+          path: allure-results/
 
       - name: Publish Test Report
         if: always()
