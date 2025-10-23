@@ -29,6 +29,13 @@ public class Screenshots {
         if (!(driver instanceof TakesScreenshot)) return null;
 
         try {
+            if (driver instanceof org.openqa.selenium.remote.RemoteWebDriver rd
+                    && rd.getSessionId() == null) {
+                return null; // session is gone
+            }
+        } catch (Exception ignored) {}
+
+        try {
             byte[] png = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 
             String day = LocalDate.now().format(DAY);
