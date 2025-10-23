@@ -7,7 +7,7 @@ on:
 #    branches: [ main, develop ]
   workflow_dispatch:
 env:
-  JAVA_VERSION: '21'
+  JAVA_VERSION: '25'
   
 jobs:
   test:
@@ -34,19 +34,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
             
-      - name: 🔧 Install System Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget unzip xvfb
-          
-          # Start virtual display
-          export DISPLAY=:99
-          Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-          sleep 3
             
       - name: 🌐 Setup Chrome
         if: matrix.browser == 'chrome'
-        uses: browser-actions/setup-chrome@latest
+        uses: nanasess/setup-chromedriver@v2
 
       - name: 🌐 Verify Chrome Installation
         if: matrix.browser == 'chrome'
