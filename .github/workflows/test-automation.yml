@@ -69,10 +69,7 @@ jobs:
 
       - name: Run Tests
         run: mvn clean test \
-          -Dtest.browser=${{ matrix.browser }} \
           -Dheadless=true \
-          -Dwebdriver.firefox.args="--no-sandbox,--disable-dev-shm-usage,--disable-gpu,--remote-debugging-port=9222" \
-          -Dwebdriver.chrome.args="--no-sandbox,--disable-dev-shm-usage,--disable-gpu,--remote-debugging-port=9222" \
           -Dtest.grid=false
 
       - name: Upload Test Results
