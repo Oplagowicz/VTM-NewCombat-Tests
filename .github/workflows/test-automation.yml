@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome]
+        browser: [chrome, firefox]
 
     steps:
       - name: 📥 Checkout Repository
@@ -33,6 +33,15 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+            
+      - name: 🌐 Browser Drivers Setup
+        run: |
+          if [ "${{ matrix.browser }}" = "chrome" ]; then
+            wget -qO- https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb | sudo dpkg -i -
+            sudo apt-get install -f
+          elif [ "${{ matrix.browser }}" = "firefox" ]; then
+            sudo apt-get install -y firefox
+          fi
 
 
       - name: Run Tests
