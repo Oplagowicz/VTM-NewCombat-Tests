@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class ElementHelper {
     WebDriver driver;
-    private static final Logger logger = LoggerFactory.getLogger(ElementHelper.class);
+    public static final Logger logger = LoggerFactory.getLogger(ElementHelper.class);
 
     public ElementHelper(WebDriver driver) {
         this.driver = driver;

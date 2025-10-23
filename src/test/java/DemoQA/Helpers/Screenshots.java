@@ -21,19 +21,21 @@ public class Screenshots {
     private static final DateTimeFormatter DAY = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TS = DateTimeFormatter.ofPattern("HH-mm-ss-SSS");
 
-    private Screenshots() {
+    private static boolean ciChrome(WebDriver driver) {
+        String ci = (String) ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("return navigator.userAgent;");
+        return ci != null && ci.toLowerCase().contains("chrome") && ci.toLowerCase().contains("headless");
     }
 
     public static Path save(WebDriver driver, String testName) {
         if (driver == null) return null;
         if (!(driver instanceof TakesScreenshot)) return null;
+        if (ciChrome(driver)) {
+            // Chrome headless has a bug producing blank screenshots
+            return null;
+        }
 
-        try {
-            if (driver instanceof org.openqa.selenium.remote.RemoteWebDriver rd
-                    && rd.getSessionId() == null) {
-                return null; // session is gone
-            }
-        } catch (Exception ignored) {}
+
 
         try {
             byte[] png = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);

@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import static DemoQA.Helpers.ElementHelper.logger;
+
 public class ScreenshotOnFailureListener implements ITestListener {
 
     @Override
@@ -28,7 +30,7 @@ public class ScreenshotOnFailureListener implements ITestListener {
         if (driver != null) {
             Screenshots.save(driver, result.getName());
         } else {
-            System.out.println("[WARN] No WebDriver found for screenshot.");
+            logger.error("[WARN] No WebDriver found for screenshot.");
         }
     }
 
