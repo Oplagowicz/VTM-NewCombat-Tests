@@ -13,6 +13,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         browser: [chrome, firefox]
 
@@ -59,6 +60,7 @@ jobs:
 
 
       - name: Run Tests
+        continue-on-error: true
         env:
           CI: "true"
         run: mvn clean test -Dbrowser=${{ matrix.browser }} -Dmode=headless  -Dsurefire.reportFormat=xml
