@@ -37,13 +37,15 @@ jobs:
             
       - name: 🌐 Setup Chrome
         if: matrix.browser == 'chrome'
-        uses: nanasess/setup-chromedriver@v2
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
       - name: 🌐 Verify Chrome Installation
         if: matrix.browser == 'chrome'
         run: |
-          google-chrome --version
-          which google-chrome
+          chrome --version || google-chrome --version
+          which chrome || which google-chrome
 
       - name: 🌐 Setup Firefox
         if: matrix.browser == 'firefox'
@@ -59,6 +61,8 @@ jobs:
 
 
       - name: Run Tests
+        env:
+          CI: "true"
         run: mvn clean test -Dbrowser=${{ matrix.browser }} -Dmode=headless  -Dsurefire.reportFormat=xml
 
       - name: Upload Test Results
