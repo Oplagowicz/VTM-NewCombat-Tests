@@ -35,9 +35,18 @@ jobs:
             ${{ runner.os }}-maven-
             
       - name: 🌐 Setup Browser Drivers
-        uses: Manassas/setup-webdriver@v2
+        if: matrix.browser == 'firefox'
+        uses: abhi1693/setup-browser@v0.3.4
         with:
-          browsers: ${{ matrix.browser }}
+          browser: firefox
+          version: latest
+
+      - name: 🌐 Setup Browser Drivers
+        if: matrix.browser == 'chrome'
+        uses: abhi1693/setup-browser@v0.3.4
+        with:
+          browser: chrome
+          version: latest
 
 
 
