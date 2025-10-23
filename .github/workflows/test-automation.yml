@@ -68,7 +68,7 @@ jobs:
 
 
       - name: Run Tests
-        run: mvn clean test -Dbrowser=${{ matrix.browser }} -Dsurefire.reportFormat=xml
+        run: mvn clean test -Dbrowser=${{ matrix.browser }} -Dmode=headless  -Dsurefire.reportFormat=xml
 
       - name: Upload Test Results
         if: always()

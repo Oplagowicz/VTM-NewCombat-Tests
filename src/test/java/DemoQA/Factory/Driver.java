@@ -19,8 +19,16 @@ public class Driver {
      * @return Ready-to-use WebDriver
      */
     public static WebDriver createDriver(String browser, String mode) {
+        // Detect if running in GitHub Actions (CI)
+        boolean isCI = "true".equalsIgnoreCase(System.getenv("CI"));
+
         if (browser == null) browser = "chrome";
         if (mode == null) mode = "desktop";
+
+        // Force headless mode on CI
+        if (isCI && !"mobile".equalsIgnoreCase(mode)) {
+            mode = "headless";
+        }
 
         WebDriver driver = switch (browser.toLowerCase()) {
             case "chrome" -> createChromeDriver(mode);
@@ -47,6 +55,13 @@ public class Driver {
     // ---------- Chrome setup ----------
     private static WebDriver createChromeDriver(String mode) {
         ChromeOptions options = new ChromeOptions();
+
+        // Add safe defaults for CI
+        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+
+        if ("headless".equalsIgnoreCase(mode)) {
+            options.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
+        }
 
         if ("mobile".equalsIgnoreCase(mode)) {
             // Simulate mobile using Chrome DevTools Protocol (CDP)
@@ -75,6 +90,12 @@ public class Driver {
     // ---------- Firefox setup ----------
     private static WebDriver createFirefoxDriver(String mode) {
         FirefoxOptions options = new FirefoxOptions();
+
+        if ("headless".equalsIgnoreCase(mode)) {
+            options.addArguments("-headless");
+            options.addArguments("--width=1920", "--height=1080");
+        }
+
         WebDriver driver = new FirefoxDriver(options);
 
         if ("mobile".equalsIgnoreCase(mode)) {
