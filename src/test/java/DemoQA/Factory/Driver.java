@@ -7,9 +7,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Driver {
 
     /**
@@ -64,25 +61,9 @@ public class Driver {
         }
 
         if ("mobile".equalsIgnoreCase(mode)) {
-            // Simulate mobile using Chrome DevTools Protocol (CDP)
-            Map<String, Object> deviceMetrics = new HashMap<>();
-            deviceMetrics.put("width", 375);
-            deviceMetrics.put("height", 812);
-            deviceMetrics.put("pixelRatio", 3);
+            options.addArguments("--headless=new", "--disable-gpu", "--window-size=375,812");
 
-            Map<String, Object> mobileEmulation = new HashMap<>();
-            mobileEmulation.put("deviceMetrics", deviceMetrics);
-            mobileEmulation.put("userAgent",
-                    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) " +
-                            "AppleWebKit/605.1.15 (HTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1");
-
-            options.setExperimentalOption("mobileEmulation", mobileEmulation);
-        } else {
-            options.addArguments("--window-size=1366,768");
         }
-
-        // Optional: enable headless to reduce runtime
-        // options.addArguments("--headless=new");
 
         return new ChromeDriver(options);
     }
@@ -92,16 +73,14 @@ public class Driver {
         FirefoxOptions options = new FirefoxOptions();
 
         if ("headless".equalsIgnoreCase(mode)) {
-            options.addArguments("-headless");
-            options.addArguments("--width=1920", "--height=1080");
+            options.addArguments("-headless", "-width=1920", "-height=1080");
         }
 
-        WebDriver driver = new FirefoxDriver(options);
 
         if ("mobile".equalsIgnoreCase(mode)) {
-            driver.manage().window().setSize(new Dimension(375, 812));
+            options.addArguments("-headless", "-width=375", "-height=812");
         }
 
-        return driver;
+        return new FirefoxDriver(options);
     }
 }

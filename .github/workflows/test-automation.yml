@@ -35,26 +35,15 @@ jobs:
             ${{ runner.os }}-maven-
             
             
-      - name: 🌐 Install Google Chrome via apt
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg
-          wget -qO- https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-linux-signing-keyring.gpg
-          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-linux-signing-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+      - name: 🌐 Setup Chrome
+        if: matrix.browser == 'chrome'
+        uses: browser-actions/setup-chrome@latest
 
-      - name: ❌ Remove conflicting chromedriver from PATH
-        run: |
-          sudo apt-get remove -y chromedriver || true
-          sudo rm -f /usr/bin/chromedriver || true
-          which chromedriver || echo "OK: no chromedriver in PATH"
-
-      - name: ✅ Verify Chrome
+      - name: 🌐 Verify Chrome Installation
+        if: matrix.browser == 'chrome'
         run: |
           google-chrome --version
           which google-chrome
-          google-chrome --headless=new --dump-dom "data:text/html,ok"
 
       - name: 🌐 Setup Firefox
         if: matrix.browser == 'firefox'
